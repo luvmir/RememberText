@@ -1,7 +1,8 @@
 $(document).ready(function(){
-	var DEFINE_VOCA_LIST_FILE_NAME = "./res/voca_list.csv"
+    var DEFINE_RES_DIR_PATH = "./res/";
+	var DEFINE_VOCA_LIST_FILE_PATH = DEFINE_RES_DIR_PATH + "voca_list.csv"
 	var DEFINE_CSV_DELIMETER = ",";
-	var DEFINE_VOCA_DIR_PATH = "./res/";
+
 
 	var currentVocaFileName = "";
 	var vocaList = [];
@@ -25,6 +26,13 @@ $(document).ready(function(){
     	}
     }
 
+    function initVoca() {
+        vocaList = [];
+        questionList = [];
+        totalCount = 0;
+        currentIndex = 0;
+    }
+
 	function initScreen() {
 		$("#div_container_question").hide();
 		$("#button_start").hide();
@@ -36,12 +44,14 @@ $(document).ready(function(){
 	}
 
 	function updateScreenAfterVocaLoaded() {
-		$("#div_container_question").show();
+        initVoca();
+        initScreen();
 		$("#button_load_voca_list").hide();
 		$("#button_start").show();
 	}
 
 	function updateScreenAfterStarted() {
+        $("#div_container_question").show();
 		$("#button_check").show();
 		$("#button_pass").show();
 		$("#button_prev").show();
@@ -113,7 +123,8 @@ $(document).ready(function(){
     $("#select_voca_list").change(function() {
     	if ($("#select_voca_list").val() != "default") {
     		currentVocaFileName = $("#select_voca_list").val();
-    		$("#div_hidden_full_contents").load(DEFINE_VOCA_DIR_PATH + currentVocaFileName, function(responseTxt, statusTxt, xhr){
+            var currentVocaFilePath = DEFINE_RES_DIR_PATH + currentVocaFileName;
+    		$("#div_hidden_full_contents").load(currentVocaFilePath, function(responseTxt, statusTxt, xhr){
         		if(statusTxt == "success") {
     				updateScreenAfterVocaLoaded();
         		}
@@ -169,7 +180,7 @@ $(document).ready(function(){
     });
 
 
-    $("#div_hidden_voca_list").load(DEFINE_VOCA_LIST_FILE_NAME);
+    $("#div_hidden_voca_list").load(DEFINE_VOCA_LIST_FILE_PATH);
     
     initScreen();
 });	
