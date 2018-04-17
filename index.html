@@ -9,14 +9,26 @@
 </head>
 <body>
 
+<div id="div_hidden_voca_list" hidden="true"></div>
 <div id="div_hidden_full_contents" hidden="true"></div>
+<br>
+<div id="div_container_voca">
+<select id="select_voca_list">
+	<option value="default" default>Please Select Voca</option>
+</select>
+<button id="button_load_voca_list">Load List</button>
+</div>
+<br><br>
+<div id="div_container_question">
 <div id="div_index_info"></div>
-
-<br> Korean : <input type="text" id="input_korean"><input type="text" id="input_hidden_english" hidden="true">
-<br> English : <input type="text" id="input_english"><br>
+<br> Korean : <input type="text" id="input_korean" size="80"><input type="text" id="input_hidden_english" hidden="true">
+<br> English : <input type="text" id="input_english" size="80"><br>
+</div>
 <br>
 <button id="button_start">Start!</button>
 <button id="button_check">Check</button>
 <button id="button_pass">Pass!</button>
+<button id="button_prev">Prev</button>
+<button id="button_next">Next</button>
 </body>
 </html>
