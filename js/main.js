@@ -69,7 +69,7 @@ $(document).ready(function(){
 			currentIndex = 0;
 		}
 
-		eraseAllInputField():
+		eraseAllInputField();
 		$("#div_index_info").html((currentIndex+1) + " / " + totalCount);
 		$("#input_korean:text").val(questionList[currentIndex].korean);
 	    $("#input_hidden_english:text").val(questionList[currentIndex].english);
