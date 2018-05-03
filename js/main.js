@@ -1,29 +1,29 @@
 $(document).ready(function(){
     var DEFINE_RES_DIR_PATH = "./res/";
-	var DEFINE_VOCA_LIST_FILE_PATH = DEFINE_RES_DIR_PATH + "voca_list.csv"
-	var DEFINE_CSV_DELIMETER = ",";
+    var DEFINE_VOCA_LIST_FILE_PATH = DEFINE_RES_DIR_PATH + "voca_list.csv"
+    var DEFINE_CSV_DELIMETER = ",";
 
 
-	var currentVocaFileName = "";
-	var vocaList = [];
-	var questionList = [];
-	var totalCount = 0;
-	var currentIndex = 0;
+    var currentVocaFileName = "";
+    var vocaList = [];
+    var questionList = [];
+    var totalCount = 0;
+    var currentIndex = 0;
 
     function increaseIndex() {
-    	if (currentIndex == totalCount - 1) {
-    		currentIndex = 0;
-    	} else {
-    		currentIndex++;
-    	}
+        if (currentIndex == totalCount - 1) {
+            currentIndex = 0;
+        } else {
+            currentIndex++;
+        }
     }
 
     function decreaseIndex() {
-    	if (currentIndex <= 0) {
-    		currentIndex = totalCount - 1;
-    	} else {
-    		currentIndex--;
-    	}
+        if (currentIndex <= 0) {
+            currentIndex = totalCount - 1;
+        } else {
+            currentIndex--;
+        }
     }
 
     function initVoca() {
@@ -33,154 +33,158 @@ $(document).ready(function(){
         currentIndex = 0;
     }
 
-	function initScreen() {
-		$("#div_container_question").hide();
-		$("#button_start").hide();
-		$("#button_check").hide();
-		$("#button_pass").hide();
-		$("#button_prev").hide();
-		$("#button_next").hide();
-		eraseAllInputField();
-	}
+    function initScreen() {
+        $("#div_container_question").hide();
+        $("#button_start").hide();
+        $("#button_check").hide();
+        $("#button_pass").hide();
+        $("#button_prev").hide();
+        $("#button_next").hide();
+        eraseAllInputField();
+    }
 
-	function updateScreenAfterVocaLoaded() {
+    function updateScreenAfterVocaSelected() {
         initVoca();
         initScreen();
-		$("#button_load_voca_list").hide();
-		$("#button_start").show();
-	}
+        $("#button_start").show();
+    }
 
-	function updateScreenAfterStarted() {
+    function updateScreenAfterVocaLoaded() {
+        $("#button_load_voca_list").hide();
+    }
+
+    function updateScreenAfterStarted() {
         $("#div_container_question").show();
-		$("#button_check").show();
-		$("#button_pass").show();
-		$("#button_prev").show();
-		$("#button_next").show();
-	}
+        $("#button_check").show();
+        $("#button_pass").show();
+        $("#button_prev").show();
+        $("#button_next").show();
+    }
 
-	function eraseAllInputField() {
-		$("#input_korean:text").val("");
-		$("#input_english:text").val("");
-	}
+    function eraseAllInputField() {
+        $("#input_korean:text").val("");
+        $("#input_english:text").val("");
+    }
 
-	function checkMatched(savedString, typedString) {
-		if (savedString == typedString) {
-			return true;
-		} 
-		return false;
-	}
+    function checkMatched(savedString, typedString) {
+        if (savedString == typedString) {
+            return true;
+        } 
+        return false;
+    }
 
-	function updateQuestion() {
-		if ( currentIndex == -1 ) {
-			currentIndex = totalCount - 1;
-		}
+    function updateQuestion() {
+        if ( currentIndex == -1 ) {
+            currentIndex = totalCount - 1;
+        }
 
-	    if ( currentIndex == totalCount ) {
-			currentIndex = 0;
-		}
+        if ( currentIndex == totalCount ) {
+            currentIndex = 0;
+        }
 
-		eraseAllInputField();
-		$("#div_index_info").html((currentIndex+1) + " / " + totalCount);
-		$("#input_korean:text").val(questionList[currentIndex].korean);
-	    $("#input_hidden_english:text").val(questionList[currentIndex].english);
-	}
+        eraseAllInputField();
+        $("#div_index_info").html((currentIndex+1) + " / " + totalCount);
+        $("#input_korean:text").val(questionList[currentIndex].korean);
+        $("#input_hidden_english:text").val(questionList[currentIndex].english);
+    }
 
-	function loadVocaList() {
-		var vocaListText = $("#div_hidden_voca_list").text();
-		var lines = vocaListText.split("\n");
+    function loadVocaList() {
+        var vocaListText = $("#div_hidden_voca_list").text();
+        var lines = vocaListText.split("\n");
 
-		for (var i = 0; i < lines.length; i++) {
-			var innerLine = lines[i].split(DEFINE_CSV_DELIMETER);
-			var voca = { "description" : innerLine[0], "fileName" : innerLine[1] };
-			vocaList.push (voca);
-		}
+        for (var i = 0; i < lines.length; i++) {
+            var innerLine = lines[i].split(DEFINE_CSV_DELIMETER);
+            var voca = { "description" : innerLine[0], "fileName" : innerLine[1] };
+            vocaList.push (voca);
+        }
 
-		return lines.length;
-	}
+        return lines.length;
+    }
 
     function parsingContents() {
-    	var contents = $("#div_hidden_full_contents").text();
+        var contents = $("#div_hidden_full_contents").text();
         var lines = contents.split("\n");
 
-		for (var i = 0; i < lines.length; i++) {
-			var innerLine = lines[i].split(DEFINE_CSV_DELIMETER);
-			var question = { "korean" : innerLine[0], "english" : innerLine[1] };
-			questionList.push (question);
-		}
+        for (var i = 0; i < lines.length; i++) {
+            var innerLine = lines[i].split(DEFINE_CSV_DELIMETER);
+            var question = { "korean" : innerLine[0], "english" : innerLine[1] };
+            questionList.push (question);
+        }
 
-		return lines.length;
+        return lines.length;
     }
 
     function addVocaList() {
-    	for (var i = 0; i < vocaList.length; i++) {
-    		$('#select_voca_list').append($('<option>', { 
-		        value: vocaList[i].fileName,
-		        text : vocaList[i].description 
-		    }));
-    	}
+        for (var i = 0; i < vocaList.length; i++) {
+            $('#select_voca_list').append($('<option>', { 
+                value: vocaList[i].fileName,
+                text : vocaList[i].description 
+            }));
+        }
     }
 
     $("#select_voca_list").change(function() {
-    	if ($("#select_voca_list").val() != "default") {
-    		currentVocaFileName = $("#select_voca_list").val();
+        if ($("#select_voca_list").val() != "default") {
+            currentVocaFileName = $("#select_voca_list").val();
             var currentVocaFilePath = DEFINE_RES_DIR_PATH + currentVocaFileName;
-    		$("#div_hidden_full_contents").load(currentVocaFilePath, function(responseTxt, statusTxt, xhr){
-        		if(statusTxt == "success") {
-    				updateScreenAfterVocaLoaded();
-        		}
-        		if(statusTxt == "error") {
-            		alert("Voca loading error! (" + xhr.status + ":" + xhr.statusText + ")");
-            		initScreen();
-            	}
-    		});
-    	}
+            $("#div_hidden_full_contents").load(currentVocaFilePath, function(responseTxt, statusTxt, xhr){
+                if(statusTxt == "success") {
+                    updateScreenAfterVocaSelected();
+                }
+                if(statusTxt == "error") {
+                    alert("Voca loading error! (" + xhr.status + ":" + xhr.statusText + ")");
+                    initScreen();
+                }
+            });
+        }
     });
 
     $("#button_load_voca_list").click(function() {
-    	loadVocaList();
-    	addVocaList();
+        loadVocaList();
+        addVocaList();
+        updateScreenAfterVocaLoaded();
     });
 
 
     $("#button_start").click(function() {
 
-    	if($("#button_start").text() == "Start!") {
-    		totalCount = parsingContents();
-    		updateQuestion();
-    		updateScreenAfterStarted();
-    	}
-   	
+        if($("#button_start").text() == "Start!") {
+            totalCount = parsingContents();
+            updateQuestion();
+            updateScreenAfterStarted();
+        }
+    
     });
 
     $("#button_check").click(function() {
-    	if (checkMatched($("#input_hidden_english").val(), $("#input_english").val())) {
-    		alert("Matched!");
-    		increaseIndex();
-    		updateQuestion();
-    		$("#input_english:text").val("");
-    	} else {
-    		alert("Wrong!");
-    	}   	
+        if (checkMatched($("#input_hidden_english").val(), $("#input_english").val())) {
+            alert("Matched!");
+            increaseIndex();
+            updateQuestion();
+            $("#input_english:text").val("");
+        } else {
+            alert("Wrong!");
+        }       
     });
 
     $("#button_pass").click(function() {
-    	alert($("#input_hidden_english").val());
-    	increaseIndex();
-   		updateQuestion();
+        alert($("#input_hidden_english").val());
+        increaseIndex();
+        updateQuestion();
     });
 
     $("#button_prev").click(function() {
-    	decreaseIndex();
-   		updateQuestion();
+        decreaseIndex();
+        updateQuestion();
     });
 
     $("#button_next").click(function() {
-    	increaseIndex();
-   		updateQuestion();
+        increaseIndex();
+        updateQuestion();
     });
 
 
     $("#div_hidden_voca_list").load(DEFINE_VOCA_LIST_FILE_PATH);
     
     initScreen();
-});	
+}); 
